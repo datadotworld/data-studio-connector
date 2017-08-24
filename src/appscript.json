@@ -1,0 +1,21 @@
+{
+  "timeZone": "America/Los_Angeles",
+  "dependencies": {
+    "libraries": [{
+      "userSymbol": "OAuth2",
+      "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
+      "version": "21",
+      "developmentMode": true
+    }]
+  },
+  "dataStudio": {
+    "name": "data.world",
+    "company": "data.world, Inc.",
+    "companyUrl": "https://data.world",
+    "logoUrl": "https://cdn.filepicker.io/api/file/YB2O14XWSJ2X0AMXHJLf",
+    "addonUrl": "https://data.world/integrations/data-studio",
+    "supportUrl": "https://help.data.world",
+    "description": "The data.world connector for Google Data Studio allows users to create reports with data pulled from one or more data.world datasets using SQL queries.\ndata.world is designed for data and the people who work with data.  From professional projects to open data, data.world helps you host and share your data, collaborate with your team, and capture context and conclusions as you work.",
+    "sources": ["data.world"]
+  }
+}
