@@ -15,6 +15,8 @@
  */
 
 function getOAuthService() {
+    var scriptProperties = PropertiesService.getScriptProperties();
+
     // Create a new service with the given name. The name will be used when
     // persisting the authorized token, so ensure it is unique within the
     // scope of the property store.
@@ -25,8 +27,8 @@ function getOAuthService() {
         .setTokenUrl('https://data.world/oauth/access_token')
 
         // Set the client ID and secret, from the Google Developers Console.
-        .setClientId('datastudio')
-        .setClientSecret('Wa*&#33;edada4up')
+        .setClientId(scriptProperties.getProperty('oauthClientId'))
+        .setClientSecret(scriptProperties.getProperty('oauthClientSecret'))
 
         // Set the name of the callback function in the script referenced
         // above that should be invoked to complete the OAuth flow.

@@ -20,7 +20,9 @@ function getConfig(request) {
             {
                 type: 'INFO',
                 name: 'intro',
-                text: 'Enter the dataset or project URL below (e.g. https://data.world/jonloyens/an-intro-to-dataworld-dataset), and a SQL query to pull the data you need for your report.'
+                text: 'Enter the dataset or project URL below ' +
+                '(e.g. https://data.world/jonloyens/an-intro-to-dataworld-dataset), ' +
+                'and a SQL query to pull the data you need for your report.'
             },
             {
                 type: 'TEXTINPUT',
@@ -59,7 +61,9 @@ function getData(request) {
         var sampleExtraction = request.scriptParams.sampleExtraction;
     }
 
-    var requestFields = request.fields.map(function(field) { return field.name; });
+    var requestFields = request.fields.map(function (field) {
+        return field.name;
+    });
 
     return toDataResponse(requestFields, sql(
         datasetKey,
