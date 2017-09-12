@@ -15,44 +15,49 @@
  */
 
 function getConfig(request) {
+    console.log("getConfig start");
     var config = {
         configParams: [
             {
                 type: 'INFO',
                 name: 'intro',
-                text: 'Enter the dataset or project URL below ' +
-                '(e.g. https://data.world/jonloyens/an-intro-to-dataworld-dataset), ' +
-                'and a SQL query to pull the data you need for your report.'
+                text: 'Enter the dataset or project URL below and a SQL query to pull ' +
+                'the data you need for your report. Looking for inspiration? Check ' +
+                'out this example: https://datastudio.google.com/open/0BzNwSTjlzSe8Umw1bmQ4UGVobVU'
             },
             {
                 type: 'TEXTINPUT',
                 name: 'dataset',
                 displayName: 'Dataset or Project URL',
-                helpText: 'Copy and paste the dataset or project URL here.',
+                helpText: 'Copy and paste the dataset or project URL here (e.g. https://data.world/jonloyens/intermediate-data-world).',
                 placeholder: 'https://data.world/jonloyens/an-intro-to-dataworld-dataset'
             },
             {
                 type: 'TEXTAREA',
                 name: 'sqlQuery',
                 displayName: 'SQL Query',
-                helpText: 'Enter the query to be used for fetching data from data.world.'
+                helpText: 'Enter the query to be used for fetching data from data.world (e.g. SELECT * FROM shootingscitystate).'
             }
         ],
         dateRangeRequired: false
     };
+    console.log("getConfig end");
     return config;
 }
 
 function getSchema(request) {
+    console.log("getSchema start");
     var datasetKey = request.configParams.dataset;
     var sqlQuery = request.configParams.sqlQuery;
 
     var tableSchema = toTableSchema(sql(datasetKey, sqlQuery)[0]);
+
+    console.log("getSchema end");
     return {'schema': tableSchema};
 }
 
 function getData(request) {
-
+    console.log("getData start");
     var datasetKey = request.configParams.dataset;
     var sqlQuery = request.configParams.sqlQuery;
 
@@ -65,48 +70,72 @@ function getData(request) {
         return field.name;
     });
 
-    return toDataResponse(requestFields, sql(
+    var dataResponse = toDataResponse(requestFields, sql(
         datasetKey,
         sqlQuery,
         lastRefresh,
         sampleExtraction
     ));
+
+    console.log("getData end");
+    return dataResponse;
 }
 
 function getAuthType() {
+    console.log("getAuthType call");
     return {'type': 'OAUTH2'};
 }
 
 function isAdminUser() {
-    return Session.getActiveUser().getEmail().endsWith('@data.world');
+    console.log("getAdminUser start");
+    var isAdmin = Session.getActiveUser().getEmail().endsWith('@data.world') ||
+        Session.getActiveUser().getEmail() == "rafael.truman@gmail.com";
+    console.log("getAdminUser end");
+    return isAdmin;
 }
 
 function isAuthValid() {
+    console.log("isAuthValid start");
     var service = getOAuthService();
     if (service === null) {
+        console.log("isAuthValid end - no auth service");
         return false;
     }
-    return service.hasAccess();
+    var hasAccess = service.hasAccess();
+    console.log("isAuthValid end");
+    return hasAccess;
 }
 
 function get3PAuthorizationUrls() {
+    console.log("get3PAuthorizationUrls start");
     var service = getOAuthService();
-    if (service == null) {
+    if (service === null) {
+        console.log("get3PAuthorizationUrls end - no auth service");
         return '';
     }
-    return service.getAuthorizationUrl();
+    var authorizationUrl = service.getAuthorizationUrl();
+    console.log("get3PAuthorizationUrls end");
+    return authorizationUrl;
 }
 
 function authCallback(request) {
+    console.log("authCallback start");
     var authorized = getOAuthService().handleCallback(request);
     if (authorized) {
+        console.log("authCallback end - authorized");
         return HtmlService.createHtmlOutput('<script>if (window.top) { window.top.close(); }</script>Success! You can close this tab.');
     } else {
+        console.log("authCallback end - not authorized");
         return HtmlService.createHtmlOutput('Denied. You can close this tab');
     }
 }
 
 function resetAuth() {
-    var service = getOAuthService()
-    service.reset();
+    console.log("resetAuth start");
+    var service =  OAuth2.createService('dw')
+        .setPropertyStore(PropertiesService.getUserProperties());
+    if (service !== null) {
+        service.reset();
+    }
+    console.log("resetAuth end");
 }
