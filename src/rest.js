@@ -20,21 +20,39 @@ var cachedResponse = null;
 function sql(datasetKey, sqlQuery, lastRefresh, sampleExtraction) {
     if (!(lastRefresh && cachedResponseLastRefresh) ||
         (lastRefresh > cachedResponseLastRefresh)) {
+
         var params = {
-            'method': 'post',
-            'headers': {
+            method: 'post',
+            headers: {
                 'Accept': 'application/x-ndjson',
                 'Authorization': 'Bearer ' + getOAuthService().getAccessToken()
             },
-            'payload': {
+            payload: {
                 'query': sqlQuery
-            }
+            },
+            muteHttpExceptions: true
         };
 
         var response = UrlFetchApp.fetch(getSqlEndpoint(datasetKey), params);
         if (response.getResponseCode() === 200) {
             cachedResponse = response;
             cachedResponseLastRefresh = lastRefresh;
+        } else {
+            if (response.getResponseCode() === 401) {
+                resetAuth();
+            }
+
+            var errorResponse = null;
+            try {
+                errorResponse = JSON.parse(response.getContentText());
+            } catch (e) {
+                errorResponse = {code: response.getResponseCode()};
+            }
+            var errorObj = new Error(errorResponse.message || errorResponse.code);
+            logConnectorError(errorObj, "Unable to execute query. Dataset: " + datasetKey +
+                ". Query: " + sqlQuery + ". Auth valid status: " + isAuthValid() + ".");
+            throwConnectorError("Unable to execute query (error: " + errorObj.message + "). " +
+                "Please check your connection and verify that query is correct.", true);
         }
     }
 
