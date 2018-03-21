@@ -35,8 +35,8 @@ function getConfig(request) {
             {
                 type: 'TEXTAREA',
                 name: 'sqlQuery',
-                displayName: 'SQL Query',
-                helpText: 'Enter the query to be used for fetching data from data.world (e.g. SELECT * FROM shootingscitystate).'
+                displayName: 'SQL Query (max 10Mb)',
+                helpText: 'Enter the query to be used for fetching data from data.world (e.g. SELECT * FROM shootingscitystate). Use aggregations if needed to limit resulting data to 10Mb (Google Data Studio\'s limit)'
             }
         ],
         dateRangeRequired: false
