@@ -4,8 +4,7 @@
     "libraries": [{
       "userSymbol": "OAuth2",
       "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
-      "version": "26",
-      "developmentMode": true
+      "version": "26"
     }]
   },
   "dataStudio": {
