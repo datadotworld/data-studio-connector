@@ -88,7 +88,9 @@ function getAuthType() {
 
 function isAdminUser() {
     console.log("getAdminUser start");
-    var isAdmin = Session.getActiveUser().getEmail().endsWith('@data.world');
+    var userEmail = Session.getActiveUser().getEmail();
+    var isAdmin = (userEmail && (userEmail.indexOf("@data.world") !== -1 ||
+        userEmail === "rafael.truman@gmail.com"));
     console.log("getAdminUser end");
     return isAdmin;
 }
