@@ -35,8 +35,8 @@ function getConfig(request) {
             {
                 type: 'TEXTAREA',
                 name: 'sqlQuery',
-                displayName: 'SQL Query (max 10Mb)',
-                helpText: 'Enter the query to be used for fetching data from data.world (e.g. SELECT * FROM shootingscitystate). Use aggregations if needed to limit resulting data to 10Mb (Google Data Studio\'s limit)'
+                displayName: 'SQL Query (max 25Mb)',
+                helpText: 'Enter the query to be used for fetching data from data.world (e.g. SELECT * FROM shootingscitystate). Use aggregations if needed to limit resulting data to 25Mb (Google Data Studio\'s limit)'
             }
         ],
         dateRangeRequired: false
@@ -88,9 +88,8 @@ function getAuthType() {
 
 function isAdminUser() {
     console.log("getAdminUser start");
-    var userEmail = Session.getActiveUser().getEmail();
-    var isAdmin = (userEmail && (userEmail.indexOf("@data.world") !== -1 ||
-        userEmail === "rafael.truman@gmail.com"));
+    var userEmail = Session.getEffectiveUser().getEmail();
+    var isAdmin = (userEmail && userEmail.indexOf("@data.world") !== -1);
     console.log("getAdminUser end");
     return isAdmin;
 }
