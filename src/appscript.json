@@ -5,7 +5,7 @@
       {
         "userSymbol": "OAuth2",
         "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
-        "version": "26"
+        "version": "28"
       }
     ]
   },
@@ -27,6 +27,7 @@
     "termsOfServiceUrl": "https://data.world/terms/"
   },
   "urlFetchWhitelist": [
-    "https://api.data.world/v0/"
+    "https://api.data.world/v0/",
+    "https://data.world/oauth"
   ]
 }

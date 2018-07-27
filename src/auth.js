@@ -22,7 +22,7 @@ function getOAuthService() {
     // scope of the property store.
     return OAuth2.createService('dw')
 
-    // Set the endpoint URLs, which are the same for all Google services.
+        // Set the endpoint URLs, which are the same for all Google services.
         .setAuthorizationBaseUrl('https://data.world/oauth/authorize')
         .setTokenUrl('https://data.world/oauth/access_token')
 
@@ -38,5 +38,5 @@ function getOAuthService() {
         .setPropertyStore(PropertiesService.getUserProperties())
 
         // Set the scopes to request (space-separated for Google services).
-        .setScope('user_api_read');
+        .setScope('user_api_read user_api_offline');
 }
