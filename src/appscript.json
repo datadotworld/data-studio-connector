@@ -21,7 +21,7 @@
     "privacyPolicyUrl": "https://data.world/privacy/",
     "shortDescription": "Create reports with data pulled from one or more data.world datasets using SQL queries.",
     "sources": [
-      "DATA.WORLD"
+      "DATA_WORLD"
     ],
     "supportUrl": "https://help.data.world",
     "termsOfServiceUrl": "https://data.world/terms/"
