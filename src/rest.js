@@ -27,14 +27,19 @@ function sql(datasetKey, sqlQuery, lastRefresh, sampleExtraction) {
         muteHttpExceptions: true
     };
 
-    var success = false;
     var lock = LockService.getUserLock();
-    success = lock.tryLock(60000);
-    
-    var response = UrlFetchApp.fetch(getSqlEndpoint(datasetKey), params);
-    if (lock.hasLock) {
-        lock.releaseLock();
+
+    try {
+        lock.waitLock(180000); //3 minutes lock timeout
+    } catch (e) {
+        var errorObj = new Error(e.message);
+        logConnectorError(errorObj, "Could not obtain lock after 3 minutes. Dataset: " + datasetKey +
+            ". Query: " + sqlQuery + ". Auth valid status: " + isAuthValid() + ".");
+        throwConnectorError("Server is too busy, please refresh after some time", true);
     }
+    var response = UrlFetchApp.fetch(getSqlEndpoint(datasetKey), params);
+    lock.releaseLock();
+     
     if (response.getResponseCode() === 200) {
         if (sampleExtraction) {
             // Schema extraction includes 1 schema row + 10 rows of data
