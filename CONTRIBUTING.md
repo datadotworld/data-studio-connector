@@ -82,6 +82,13 @@ Two script properties are required in the Google Apps Script project for the con
 Script properties can be saved via the script editor user interface by going to **File > Project 
 properties** and selecting the Script properties tab.
 
+### Data Studio Connector Testing
+
+The steps to test data studio connector after code changes are added in following document.
+
+* https://docs.google.com/document/d/1EqtU7z71B1rO4CI7paX5Drp3XrQI3vCzodwXPRqBogg/edit
+
+
 ### Write Tests
 
 Try to write a test that reproduces the problem you're trying to fix or describes a feature that 
