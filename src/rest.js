@@ -66,7 +66,7 @@ function sql(datasetKey, sqlQuery, lastRefresh, sampleExtraction) {
     }
 }
 
-var datasetRegex = /^(https?:\/\/data\.world\/)?(.+\/.+)$/;
+var datasetRegex = /^(https?:\/\/[a-z0-9-.]*data\.world\/)?(.+\/.+)$/;
 
 function getSqlEndpoint(dataset) {
     var normalizedDatasetKey = dataset.match(datasetRegex)[2];
