@@ -28,7 +28,6 @@
   },
   "urlFetchWhitelist": [
     "https://api.data.world/v0/",
-    "https://auth.world/oauth",
-    "https://data.world/oauth"
+    "https://auth.world/oauth"
   ]
 }

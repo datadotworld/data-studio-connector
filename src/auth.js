@@ -24,7 +24,7 @@ function getOAuthService() {
 
         // Set the endpoint URLs, which are the same for all Google services.
         .setAuthorizationBaseUrl('https://auth.data.world/oauth/authorize')
-        .setTokenUrl('https://data.world/oauth/access_token')
+        .setTokenUrl('https://auth.data.world/oauth/access_token')
 
         // Set the client ID and secret, from the Google Developers Console.
         .setClientId(scriptProperties.getProperty('oauthClientId'))
