@@ -69,8 +69,17 @@ function sql(datasetKey, sqlQuery, lastRefresh, sampleExtraction) {
 var datasetRegex = /^(https?:\/\/[a-z0-9-.]*data\.world\/)?(.+\/.+)$/;
 
 function getSqlEndpoint(dataset) {
-    var normalizedDatasetKey = dataset.match(datasetRegex)[2];
-    return 'https://api.data.world/v0/sql/' + normalizedDatasetKey + '?includeTableSchema=true';
+    var match = dataset.match(datasetRegex);
+    
+    // This error will throw if the regex fails due to varied dataset URLs
+    if (match) {
+        var normalizedDatasetKey = match[2];
+
+        return 'https://api.data.world/v0/sql/' + normalizedDatasetKey + '?includeTableSchema=true';
+    } else {
+        console.log("Dataset key extraction failed.");
+        return null;
+    }
 }
 
 function parseNdJson(text, sampleSize) {
@@ -78,5 +87,15 @@ function parseNdJson(text, sampleSize) {
 
     sampleSize = sampleSize || textLines.length;
 
-    return textLines.slice(0, sampleSize).map(JSON.parse);
+    return textLines.slice(0, sampleSize).map(function (line, index) {
+        try {
+            return JSON.parse(line);
+        } catch (error) {
+            console.error('Error parsing line ' + (index + 1) + ':', error.message);
+            return null; // Return null for lines that fail to parse
+        }
+    }).filter(function (line) {
+        // Filter out null values resulting from parsing errors
+        return line !== null;
+    });
 }

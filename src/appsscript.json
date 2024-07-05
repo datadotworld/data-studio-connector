@@ -11,11 +11,15 @@
   },
   "dataStudio": {
     "addonUrl": "https://data.world/integrations/datastudio2",
-    "authType": ["OAUTH2"],
+    "authType": [
+      "OAUTH2"
+    ],
     "company": "data.world, Inc.",
     "companyUrl": "https://data.world",
     "description": "Create reports with data pulled from one or more data.world datasets using SQL queries.\ndata.world is designed for data and the people who work with data.  From professional projects to open data, data.world helps you host and share your data, collaborate with your team, and capture context and conclusions as you work.",
-    "feeType": ["FREE_TRIAL"],
+    "feeType": [
+      "FREE_TRIAL"
+    ],
     "logoUrl": "https://cdn.filepicker.io/api/file/YB2O14XWSJ2X0AMXHJLf",
     "name": "data.world",
     "privacyPolicyUrl": "https://data.world/privacy/",
@@ -29,5 +33,9 @@
   "urlFetchWhitelist": [
     "https://api.data.world/v0/",
     "https://data.world/oauth"
-  ]
+  ],
+  "webapp": {
+    "executeAs": "USER_DEPLOYING",
+    "access": "MYSELF"
+  }
 }

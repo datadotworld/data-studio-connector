@@ -29,19 +29,30 @@ function toDataResponse(requestFields, rows) {
         filteredFieldNames.push(field.name);
     });
 
+    // Exclude the first row (schema)
     var tableData = rows.slice(1);
     return {
         'schema': filteredTableSchema,
         'rows': tableData.map(function (row) {
             return toRowResponse(filteredFieldNames, row);
+        }).filter(function (row) {
+            // Filter out null rows
+            return row !== null;
         })
     };
 }
 
 function toRowResponse(fieldNames, row) {
+    if (!row) {
+        console.error("Invalid row object:", row);
+        // Skip invalid rows
+        return null; 
+    }
+
     return {
-        'values': fieldNames.map(function (field) {
-            return row[field];
+        'values': fieldNames.map(function(field) {
+            // Check if the row contains the field, if not return null
+            return row.hasOwnProperty(field) ? row[field] : null;
         })
     };
 }
@@ -51,6 +62,8 @@ function toTableSchema(schemaRow) {
 }
 
 function toField(tableSchemaField) {
+    var ftype;
+
     switch (tableSchemaField.type) {
         case 'boolean':
             ftype = 'BOOLEAN';
@@ -67,5 +80,5 @@ function toField(tableSchemaField) {
         'name': tableSchemaField.name,
         'label': tableSchemaField.title ? tableSchemaField.title : tableSchemaField.name,
         'dataType': ftype
-    }
+    };
 }
