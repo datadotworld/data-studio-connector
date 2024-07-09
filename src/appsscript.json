@@ -33,9 +33,5 @@
   "urlFetchWhitelist": [
     "https://api.data.world/v0/",
     "https://data.world/oauth"
-  ],
-  "webapp": {
-    "executeAs": "USER_DEPLOYING",
-    "access": "MYSELF"
-  }
+  ]
 }
