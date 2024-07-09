@@ -61,15 +61,15 @@ function getData(request) {
     var datasetKey = request.configParams.dataset;
     var sqlQuery = request.configParams.sqlQuery;
 
-    if (request.scriptParams) {
-        var lastRefresh = request.scriptParams.lastRefresh;
-        var sampleExtraction = request.scriptParams.sampleExtraction;
-    }
+    var lastRefresh = request.scriptParams ? request.scriptParams.lastRefresh : null;
+    var sampleExtraction = request.scriptParams ? request.scriptParams.sampleExtraction : null;
 
+    // Get the list of requested field names
     var requestFields = request.fields.map(function (field) {
         return field.name;
     });
 
+    // Fetch the data and convert it to the data response format
     var dataResponse = toDataResponse(requestFields, sql(
         datasetKey,
         sqlQuery,
